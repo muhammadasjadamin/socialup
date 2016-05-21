@@ -21,6 +21,8 @@
   "homepage": "https://github.com/muhammadasjadamin/socialup#readme",
   "dependencies": {
     "express": "^4.13.4",
+    "mongodb": "^2.1.19",
+    "mongoose": "^4.4.17",
     "twit": "^2.2.4"
   }
 }
