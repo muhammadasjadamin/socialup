@@ -4,6 +4,46 @@
 		"selected_items":
 		[
 			[
+				"json",
+				"jsonResponse"
+			],
+			[
+				"getTime",
+				"getUserTimeLine"
+			],
+			[
+				"get",
+				"getTimeLine"
+			],
+			[
+				"fe",
+				"fetchedCount"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"elemt",
+				"elementsCount"
+			],
+			[
+				"elem",
+				"elementsCount"
+			],
+			[
+				"fetc",
+				"fetchCount"
+			],
+			[
+				"res",
+				"res"
+			],
+			[
+				"user",
+				"userTimeLine"
+			],
+			[
 				"padding",
 				"padding-left"
 			],
@@ -336,14 +376,6 @@
 				"trendLookUp"
 			],
 			[
-				"res",
-				"result"
-			],
-			[
-				"get",
-				"getTopTrends"
-			],
-			[
 				"conn",
 				"connect"
 			],
@@ -482,43 +514,54 @@
 			[
 				"render",
 				"renderState"
-			],
-			[
-				"ren",
-				"renderState"
-			],
-			[
-				"user",
-				"userID"
-			],
-			[
-				"add",
-				"addDeviceModal"
-			],
-			[
-				"addDe",
-				"addDeviceModal"
-			],
-			[
-				"fun",
-				"function"
-			],
-			[
-				"handleAdd",
-				"handleAddDeviceModal"
-			],
-			[
-				"handleAddDe",
-				"handleAddDeviceModal"
-			],
-			[
-				"modal",
-				"modalState"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "routes/index.js",
+			"settings":
+			{
+				"buffer_size": 1329,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "models/myScrapper.js",
+			"settings":
+			{
+				"buffer_size": 3004,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "models/Scrapper.js",
+			"settings":
+			{
+				"buffer_size": 2706,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "models/sample.js",
+			"settings":
+			{
+				"buffer_size": 4462,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "var fs = require('fs');\nvar cheerio = require('cheerio');\nvar request = require('request');\n\n\nvar data = {\n    stream:[],\n    min:null,\n    max:null\n};\nvar count = 0;\n\nvar numTweets = 0;\n\nvar debug = false;\n\nfunction parse(html,callback) {\n\n\n    var count = 0;\n    var numTweets = 0;\n    var data = {\n        stream:[],\n        min:null,\n        max:null\n    };\n\n    var $ = cheerio.load(html);\n\n    var elements = $(\"li.js-stream-item\");\n\n    console.log(\"Fetched \"+elements.length+\" tweets.\");\n\n    if($(\"#timeline .stream-container\").length > 0) {\n        data.max = $(\"#timeline .stream-container\").data(\"max-position\");\n        data.min = $(\"#timeline .stream-container\").data(\"min-position\");\n    }\n\n    elements.each(function (i, elem) {\n        var tweetHeader = $(this).find(\".stream-item-header\").text();\n        tweetHeader = tweetHeader.replace(/[\\s\\n]+/gm, \" \");\n        var tweetText = $(this).find(\".js-tweet-text-container\").text();\n        tweetText = tweetText.replace(/[\\s\\n]+/gm, \" \");\n        var retweets = $(this).find(\".ProfileTweet-action--retweet .ProfileTweet-actionCountForAria\").text();\n        retweets = retweets.replace(/[^\\d]*/gm, \"\");\n        var favourites = $(this).find(\".ProfileTweet-action--favorite .ProfileTweet-actionCountForAria\").text();\n        favourites = favourites.replace(/[^\\d]*/gm, \"\");\n        var tweetID = $(this).find(\"div.js-stream-tweet\").data('tweet-id');\n        var permalink = $(this).find(\"div.js-stream-tweet\").data('permalink-path');\n        // console.log(stream);\n        data.stream[count] = {\n            header    : tweetHeader,\n            content   : tweetText,\n            retweets  : retweets,\n            favourites: favourites,\n            tweetID : tweetID,\n            permalink : permalink\n        };\n        count++;\n    });\n\n\n\n    if(typeof callback === \"function\")\n        callback(data);\n}\n\nfunction getMore(req,res,position,callback){\n    \n    var uri = \"http://twitter.com/i/profiles/show/\"+req.params.user+\"/timeline/tweets?max_position=\" + position;\n\n    console.log(\"Fetching: \"+uri);\n    request(uri, function (error, response, html) {\n        if (!error)\n            jsonResponse = JSON.parse(html);\n            // fs.writeFile('./json.html', html, 'utf8');\n            data.min = jsonResponse.min_position;\n            html = jsonResponse.items_html;\n\n            parse(html,function(data){\n                if(data.stream.length < numTweets){\n                    getMore(req,res,data.min,callback);\n                }\n                else{\n                    if(typeof callback === \"function\")\n                        callback(data);\n                }\n            });\n    });\n};\n\n\nmodule.exports.getMore = getMore;\nmodule.exports.parse = parse;",
+			"file": "models/twitterScrapper.js",
+			"file_size": 2822,
+			"file_write_time": 131085059846276405,
+			"settings":
+			{
+				"buffer_size": 2735,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -544,6 +587,22 @@
 	},
 	"file_history":
 	[
+		"/E/Course/Linear Algebra/Dhobi/index.php",
+		"/E/Course/Linear Algebra/home.html",
+		"/C/ExpressFolders/socialup/readme.txt",
+		"/C/ExpressFolders/socialup/app.js",
+		"/E/A47/Images/Dhobi_Final3/php/sendmail.php",
+		"/C/ExpressFolders/twitterscraper/app.js",
+		"/C/ExpressFolders/twitterscraper/package.json",
+		"/C/ExpressFolders/socialup/models/testStream.js",
+		"/C/NodeFolder/twit/testnew.js",
+		"/C/LearnApi/Twitter/modules/first.js",
+		"/C/ExpressFolders/socialup/models/getTimeLine.js",
+		"/C/NodeFolder/NJ_2/testfirebase.js",
+		"/C/ExpressFolders/socialup/text.txt",
+		"/C/ExpressFolders/socialup/models/getTweets.js",
+		"/C/ExpressFolders/socialup/views/index.html",
+		"/C/ExpressFolders/socialup/package.json",
 		"/C/xampp/htdocs/Dhobi/index.html",
 		"/E/A47/Images/Dhobi_Final3/index.html",
 		"/C/xampp/htdocs/Dhobi/js/calculated_css.js",
@@ -655,23 +714,7 @@
 		"/C/getToKnow/getToKnow/myData/json/positivefs.json",
 		"/C/getToKnow/getToKnow/myData/json/positivefe.json",
 		"/E/FYP/myDataSet/dict2.txt",
-		"/E/FYP/myDataSet/dict3.txt",
-		"/E/FYP/myDataSet/tweetsForTestingFeatures.txt",
-		"/C/getToKnow/getToKnow/myData/slang.txt",
-		"/C/getToKnow/getToKnow/myData/trainingTestedPositiveTweets.txt",
-		"/C/getToKnow/getToKnow/myData/testFeatures.txt",
-		"/C/getToKnow/getToKnow/testingFile.js",
-		"/C/getToKnow/getToKnow/myData/json/slang.json",
-		"/C/getToKnow/getToKnow/learnCallback.js",
-		"/E/FYP/myDataSet/Negative/tweeetsFetched.txt",
-		"/C/getToKnow/getToKnow/TextMining.js",
-		"/C/getToKnow/getToKnow/test.js",
-		"/E/FYP/home/swn/www/admin/dump/SentiWordNet_3.0.0_20130122.txt",
-		"/E/FYP/myDataSet/testingCorpus.txt",
-		"/E/FYP/myDataSet/trainingTestedNegativeTweets.txt",
-		"/E/FYP/myDataSet/newtestedNegativeTweets.txt",
-		"/E/FYP/myDataSet/newtestedPositiveTweets.txt",
-		"/E/FYP/myDataSet/testedPositiveTweets.txt"
+		"/E/FYP/myDataSet/dict3.txt"
 	],
 	"find":
 	{
@@ -689,6 +732,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"jsonResponse",
+			"json",
+			"from",
+			"from$",
+			"fetching",
+			"max",
+			"numTweets",
+			"res",
+			"max",
+			"min",
+			"count",
+			"jsonRes",
+			"debug",
+			"usersRef",
 			"                </",
 			"pickup",
 			"\n        ",
@@ -802,21 +859,7 @@
 			"day	",
 			"day",
 			"p",
-			"day",
-			"day	",
-			"some",
-			"s",
-			"last",
-			"shit",
-			"shits",
-			"employ",
-			"2 ",
-			"check",
-			"transparently",
-			"bl",
-			"blessing",
-			"frighten",
-			"thanks"
+			"day"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -848,8 +891,150 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "routes/index.js",
+					"settings":
+					{
+						"buffer_size": 1329,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1153,
+								1153
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "models/myScrapper.js",
+					"settings":
+					{
+						"buffer_size": 3004,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2583,
+								2583
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1380.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "models/Scrapper.js",
+					"settings":
+					{
+						"buffer_size": 2706,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2262,
+								2262
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 840.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "models/sample.js",
+					"settings":
+					{
+						"buffer_size": 4462,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								294,
+								326
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 240.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "models/twitterScrapper.js",
+					"settings":
+					{
+						"buffer_size": 2735,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1923,
+								1923
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1020.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -913,6 +1098,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 130.0,
+	"side_bar_width": 50.0,
 	"status_bar_visible": true
 }
